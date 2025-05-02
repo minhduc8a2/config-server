@@ -1,0 +1,74 @@
+server:
+  port: 8084
+  id: 0
+
+spring:
+  application:
+    name: chat-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: chat-service-consumer-1
+    producer:
+      bootstrap-servers: localhost:9092
+
+  datasource:
+    url: jdbc:postgresql://localhost:5435/chat_service_db
+    username: minhduc8a2
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: create
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: redis
+
+kafka-config:
+  chat-topic-name: chat-messages
+  chat-partitions: 3
+  chat-replicas: 1
+
+  command-topic-name: command-messages
+  command-partitions: 3
+  command-replicas: 1
+
+  presence-topic-name: presence-messages
+  presence-partitions: 3
+  presence-replicas: 1
+
+
+
+jwt:
+  secret: X0iDLiUGr5em1s0hWKnZCMdJ+irvhURKSo1faNKpGxY=
+  expiration-time: 900000
+  refresh-token:
+    expiration-time: 604800000
+
+api:
+  version: v1
+  base-url: /api/${api.version}
+  chat-service: ${api.base-url}/chat
+  chat-rooms: ${api.chat-service}/chat-rooms
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+presence:
+  redis-key-format: "presence:user:%s"
+
+websocket-connection-status:
+  redis-key-format: "websocket:user:%s"
+
+auth-service:
+  name: "AUTH-SERVICE"
+
+notification-service:
+  name: "NOTIFICATION-SERVICE"
