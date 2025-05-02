@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/user_service_db
+    username: minhduc8a2
+    password: 123456
+
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+  sql:
+    init:
+      mode: always
+
+
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600s # 10 minutes
+
+server:
+  port: 8082
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+api:
+  version: v1
+  base-url: /api/${api.version}
+  users:
+    url: ${api.base-url}/users
